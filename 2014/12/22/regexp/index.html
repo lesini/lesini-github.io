@@ -1,0 +1,703 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,正则,文本匹配,replace,test,match,exec,正则表达式,js正则表达式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在JavaScript中，正则表达式也是对象。这种模式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式-regexp">
+<meta property="og:url" content="http://pkbug.com/2014/12/22/regexp/index.html">
+<meta property="og:site_name" content="Tom Blog">
+<meta property="og:description" content="在JavaScript中，正则表达式也是对象。这种模式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。">
+<meta property="og:updated_time" content="2016-05-28T04:12:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式-regexp">
+<meta name="twitter:description" content="在JavaScript中，正则表达式也是对象。这种模式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://pkbug.com/2014/12/22/regexp/"/>
+
+
+
+
+
+  <title> 正则表达式-regexp | Tom Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Tom Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">生活不只有敲代码！</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://pkbug.com/2014/12/22/regexp/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Tom">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Tom Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Tom Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                正则表达式-regexp
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-22T15:13:19+08:00">
+                2014-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RegExp/" itemprop="url" rel="index">
+                    <span itemprop="name">RegExp</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+              <div class="post-description">
+                  在JavaScript中，正则表达式也是对象。这种模式可以被用于 RegExp 的 exec 和 test 方法以及 String 的 match、replace、search 和 split 方法。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="创建正则表达式"><a href="#创建正则表达式" class="headerlink" title="创建正则表达式"></a>创建正则表达式</h5><h6 id="第一种使用正则表达式字面量。"><a href="#第一种使用正则表达式字面量。" class="headerlink" title="第一种使用正则表达式字面量。"></a>第一种使用正则表达式字面量。</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var re = /a/igm; //i 不区分大小写 g全局匹配 m多行</div></pre></td></tr></table></figure>
+<h6 id="第二种调用RegExp构造函数。"><a href="#第二种调用RegExp构造函数。" class="headerlink" title="第二种调用RegExp构造函数。"></a>第二种调用RegExp构造函数。</h6><p>调用RegExp对象的方法，参数只支持字符串。在ES6版本开始支持字面量和变量当参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var re  = new RegExp(&apos;a&apos;,&apos;igm&apos;);</div></pre></td></tr></table></figure></p>
+<h5 id="正则表达式的元字符"><a href="#正则表达式的元字符" class="headerlink" title="正则表达式的元字符"></a>正则表达式的元字符</h5><p>常见的元字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">^	//匹配字符串的开始</div><div class="line">$	//匹配字符串的结束</div><div class="line">.	//匹配除换行符以外的任意字符</div><div class="line">\w	//匹配字母或数字或下划线或汉字</div><div class="line">\s	//匹配任意的空白符</div><div class="line">\d	//匹配数字</div><div class="line">\b	//匹配单词的开始或结束</div></pre></td></tr></table></figure></p>
+<h6 id="‘-’-匹配开始位置。"><a href="#‘-’-匹配开始位置。" class="headerlink" title="‘^’ 匹配开始位置。"></a>‘^’ 匹配开始位置。</h6><p>匹配字符开始位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//匹配字符串的开始</div><div class="line">/^a/.test(&apos;ba&apos;);</div><div class="line">false</div><div class="line">/^a/.test(&apos;ab&apos;);</div><div class="line">true</div><div class="line">//例如相匹配以数字开始数字字母或下划线结尾的字符串。</div><div class="line">/^\d+\w+/.test(&apos;98273918jdsdhkajsd&apos;)</div><div class="line">true</div><div class="line">/\d+\w+/.test(&apos;98273918jdsdhkajsd&apos;)</div><div class="line">true</div><div class="line">//如果没有加^，就会匹配不准确。</div><div class="line">/\d+\w+/.test(&apos;ldksjaksjd98273918jdsdhkajsd&apos;)</div><div class="line">true</div></pre></td></tr></table></figure></p>
+<p>如果多行标示被设置为true,同时匹配换行后紧跟的字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var str = &quot;first second\nthird fourth\nfifth sixth&quot;;</div><div class="line">var patt = /^(\w+)/gm;</div><div class="line">console.log(str.match(patt));</div><div class="line">[&quot;first&quot;, &quot;third&quot;, &quot;fifth&quot;]</div></pre></td></tr></table></figure></p>
+<p>字符出现在一个字符集合模式的第一个字符的时候. 表示匹配非字符集合里边的字符。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/[^abc]/.test(&apos;abc&apos;);</div><div class="line">false</div><div class="line">/[^abc]/.test(&apos;c&apos;);</div><div class="line">false</div><div class="line">/[^abc]/.test(&apos;kjhkjh&apos;);</div><div class="line">true</div></pre></td></tr></table></figure></p>
+<h6 id="‘-’-匹配字符串结尾位置"><a href="#‘-’-匹配字符串结尾位置" class="headerlink" title="‘$’ 匹配字符串结尾位置"></a>‘$’ 匹配字符串结尾位置</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a$/.test(&apos;abc&apos;);</div><div class="line">false</div><div class="line">/a$/.test(&apos;abca&apos;);</div><div class="line">true</div><div class="line">//同匹配开始字符一样 添加一个限制。</div></pre></td></tr></table></figure>
+<h6 id="‘-xxx-‘-准确匹配-例如校验手机号-邮箱-身份证号-密码格式-…"><a href="#‘-xxx-‘-准确匹配-例如校验手机号-邮箱-身份证号-密码格式-…" class="headerlink" title="‘/^xxx$/‘ 准确匹配 例如校验手机号 邮箱 身份证号 密码格式 …"></a>‘/^xxx$/‘ 准确匹配 例如校验手机号 邮箱 身份证号 密码格式 …</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">//只匹配字符串&apos;a&apos;</div><div class="line">/^a$/.test(&apos;a&apos;);</div><div class="line">true</div><div class="line">/^a$/.test(&apos;aa&apos;);</div><div class="line">false</div><div class="line">//只匹配字符串&apos;5-11位的数字 例如QQ&apos;</div><div class="line">/^\d&#123;5,11&#125;$/.test(&apos;123&apos;);</div><div class="line">false</div><div class="line">/^\d&#123;5,11&#125;$/.test(&apos;1237657&apos;);</div><div class="line">//如果不加会出现以下匹配不准确，正则只要匹配到符合规则的就会返回true</div><div class="line">/\d&#123;5,11&#125;/.test(&apos;aaaa1237657&apos;);</div><div class="line">true</div><div class="line">/\d&#123;5,11&#125;/.test(&apos;aaaa1237657lll&apos;);</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="‘-w’-匹配字母或数字或下划线或汉字"><a href="#‘-w’-匹配字母或数字或下划线或汉字" class="headerlink" title="‘\w’ 匹配字母或数字或下划线或汉字"></a>‘\w’ 匹配字母或数字或下划线或汉字</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/\w+/.test(&apos;987987hbdkjahsiuyo979&apos;)</div><div class="line">true</div><div class="line">/\w+/.test(&apos;987987&apos;)</div><div class="line">true</div><div class="line">/\w+/.test(&apos;kjhkhkhj&apos;)</div><div class="line">true</div><div class="line">/\w+/.test(&apos;kj1312_&apos;)</div><div class="line">true</div><div class="line">/\w+/.test(&apos;kj1312_你好&apos;)</div><div class="line">true</div><div class="line"></div><div class="line">//需要注意的是 匹配密码或者邮箱... 的时候不要直接用\w 因为出现中文也会匹配成功。 最好写[a-zA-Z]\d_。</div></pre></td></tr></table></figure>
+<h5 id="‘-’-转义符"><a href="#‘-’-转义符" class="headerlink" title="‘\’ 转义符"></a>‘\’ 转义符</h5><p>/b/匹配字符串b，/\b/ 反斜杠通常在正则里边是转义，把字符转移成特殊意义的字符。意思是匹配一个字符边界。 比如：/\bs/ 其实就是匹配字符串是以空格s’ s’开始的字符串。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var re = /\ba/;</div><div class="line">undefined</div><div class="line">re.test(&apos;ba&apos;);</div><div class="line">false</div><div class="line">re.test(&apos;ab&apos;);</div><div class="line">true</div></pre></td></tr></table></figure></p>
+<h6 id="‘-’-特殊字符转义为普通字符"><a href="#‘-’-特殊字符转义为普通字符" class="headerlink" title="‘*’ 特殊字符转义为普通字符"></a>‘*’ 特殊字符转义为普通字符</h6><p>相反\ 也会把特殊字符转移成普通字符串 例如：<em> 代表着前一项匹配0次或者多次的特殊字符，/a</em>/ 匹配最少一个a或者多个连续’aaa’，而a/*就只能匹配字符串a*<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var re = /a*/;</div><div class="line">re.test(&apos;a&apos;);</div><div class="line">true</div><div class="line">re.test(&apos;aa&apos;);</div><div class="line">true</div><div class="line">re.test(&apos;aaaaaaaaa&apos;);</div><div class="line">true</div><div class="line">var re = /a\*/;</div><div class="line">re.test(&apos;a&apos;);</div><div class="line">false</div><div class="line">re.test(&apos;a*&apos;);</div><div class="line">true</div></pre></td></tr></table></figure></p>
+<h6 id="‘-’-本身用在字符串里边是也需要转义"><a href="#‘-’-本身用在字符串里边是也需要转义" class="headerlink" title="‘\’ 本身用在字符串里边是也需要转义"></a>‘\’ 本身用在字符串里边是也需要转义</h6><p>例如：你相匹配字符串’a\b’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a\\/.test(&apos;a\\&apos;);</div><div class="line">true</div><div class="line">/a\\/.test(&apos;ab\\&apos;);</div><div class="line">false</div><div class="line">**&apos;ab\\&apos; // 字符串本身的反斜杠也是需要转义的。**</div></pre></td></tr></table></figure></p>
+<h5 id="重复"><a href="#重复" class="headerlink" title="重复"></a>重复</h5><h6 id="重复零次或更多次"><a href="#重复零次或更多次" class="headerlink" title="*    重复零次或更多次"></a>*    重复零次或更多次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a*/.test(&apos;aaaa&apos;)</div><div class="line">true</div><div class="line">/a*/.test(&apos;&apos;)</div><div class="line">true</div><div class="line">/a*/.test(&apos;a&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="重复一次或更多次"><a href="#重复一次或更多次" class="headerlink" title="+    重复一次或更多次"></a>+    重复一次或更多次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a*/.test(&apos;aaaa&apos;)</div><div class="line">true</div><div class="line">/a*/.test(&apos;&apos;)</div><div class="line">false</div><div class="line">/a*/.test(&apos;a&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="重复零次或一次"><a href="#重复零次或一次" class="headerlink" title="?    重复零次或一次"></a>?    重复零次或一次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a*/.test(&apos;aaaa&apos;)</div><div class="line">false</div><div class="line">/a*/.test(&apos;&apos;)</div><div class="line">true</div><div class="line">/a*/.test(&apos;a&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="n-重复n次"><a href="#n-重复n次" class="headerlink" title="{n}    重复n次"></a>{n}    重复n次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/a&#123;1&#125;/.test(&apos;a&apos;)</div><div class="line">true</div><div class="line">/a&#123;2&#125;/.test(&apos;a&apos;)</div><div class="line">false</div><div class="line">/a&#123;5&#125;/.test(&apos;aaaaa&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="n-重复n次或更多次"><a href="#n-重复n次或更多次" class="headerlink" title="{n,}    重复n次或更多次"></a>{n,}    重复n次或更多次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/^a&#123;1,&#125;$/.test(&apos;aaaaaa&apos;)</div><div class="line">true</div><div class="line">/^a&#123;1,&#125;$/.test(&apos;a&apos;)</div><div class="line">true</div><div class="line">/^a&#123;2,&#125;$/.test(&apos;a&apos;)</div><div class="line">false</div></pre></td></tr></table></figure>
+<h6 id="n-m-重复n到m次"><a href="#n-m-重复n到m次" class="headerlink" title="{n,m}    重复n到m次"></a>{n,m}    重复n到m次</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/^a&#123;1,5&#125;$/.test(&apos;aaaaaaa&apos;)</div><div class="line">false</div><div class="line">/^a&#123;1,5&#125;$/.test(&apos;&apos;)</div><div class="line">false</div><div class="line">/^a&#123;1,5&#125;$/.test(&apos;aa&apos;)</div><div class="line">true</div><div class="line">/^a&#123;1,5&#125;$/.test(&apos;aaaaa&apos;)</div><div class="line">true</div><div class="line">/^a&#123;1,5&#125;$/.test(&apos;aaaaaa&apos;)</div><div class="line">false</div></pre></td></tr></table></figure>
+<h5 id="反义"><a href="#反义" class="headerlink" title="反义"></a>反义</h5><h6 id="W-匹配任意不是字母，数字，下划线，汉字的字符"><a href="#W-匹配任意不是字母，数字，下划线，汉字的字符" class="headerlink" title="\W    匹配任意不是字母，数字，下划线，汉字的字符"></a>\W    匹配任意不是字母，数字，下划线，汉字的字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/\W/.test(&apos;@&apos;)</div><div class="line">true</div><div class="line">/\W/.test(&apos;1&apos;)</div><div class="line">false</div><div class="line">/\W/.test(&apos;a&apos;)</div><div class="line">false</div><div class="line">/\W/.test(&apos;！&apos;)</div><div class="line">true</div><div class="line">/\W/.test(&apos;hjdgsjahg!!!&apos;)</div><div class="line">true</div><div class="line">/^\W$/.test(&apos;hjdgsjahg!!!&apos;)</div><div class="line">false</div></pre></td></tr></table></figure>
+<h6 id="S-匹配任意不是空白符的字符"><a href="#S-匹配任意不是空白符的字符" class="headerlink" title="\S    匹配任意不是空白符的字符"></a>\S    匹配任意不是空白符的字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/\S/.test(&apos;&apos;)</div><div class="line">false</div><div class="line">/\S/.test(&apos;1&apos;)</div><div class="line">true</div><div class="line">/\S/.test(&apos;jsdhaj12121!@#&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="D-匹配任意非数字的字符"><a href="#D-匹配任意非数字的字符" class="headerlink" title="\D    匹配任意非数字的字符"></a>\D    匹配任意非数字的字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/^\D$/.test(&apos;q&apos;)</div><div class="line">true</div><div class="line">/^\D$/.test(&apos;qkjshdj&apos;)</div><div class="line">false</div><div class="line">/^\D+$/.test(&apos;qkjshdj&apos;)</div><div class="line">true</div><div class="line">/^\D+$/.test(&apos;1&apos;)</div><div class="line">false</div><div class="line">/^\D+$/.test(&apos;13423&apos;)</div><div class="line">false</div><div class="line">/^\D$/.test(&apos;13423&apos;)</div><div class="line">false</div></pre></td></tr></table></figure>
+<h6 id="B-匹配不是单词开头或结束的位置"><a href="#B-匹配不是单词开头或结束的位置" class="headerlink" title="\B    匹配不是单词开头或结束的位置"></a>\B    匹配不是单词开头或结束的位置</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/\B/.test(&apos;1jkdsh&apos;)</div><div class="line">true</div><div class="line">/\B$/.test(&apos;1jkdsh&apos;)</div><div class="line">false</div><div class="line">/^\B/.test(&apos;1jkdsh&apos;)</div><div class="line">false</div><div class="line">/^\B/.test(&apos; 1jkdsh&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h6 id="x-匹配除了x以外的任意字符"><a href="#x-匹配除了x以外的任意字符" class="headerlink" title="[^x]    匹配除了x以外的任意字符"></a>[^x]    匹配除了x以外的任意字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/[^a]/.test(&apos;a&apos;)</div><div class="line">false</div><div class="line">/[^a]/.test(&apos;b&apos;)</div><div class="line">true</div><div class="line">/[^a]/.test(&apos;bs&apos;)</div><div class="line">true</div><div class="line">/[^a]/.test(&apos;bsdsjkhd&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<p>//example</p>
+<h6 id="aeiou-匹配除了aeiou这几个字母以外的任意字符"><a href="#aeiou-匹配除了aeiou这几个字母以外的任意字符" class="headerlink" title="[^aeiou]    匹配除了aeiou这几个字母以外的任意字符"></a>[^aeiou]    匹配除了aeiou这几个字母以外的任意字符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/[^aeiou]/.test(&apos;bsdsjkhd&apos;)</div><div class="line">true</div><div class="line">/[^aeiou]/.test(&apos;bsdsjkhdi&apos;)</div><div class="line">true</div><div class="line">/[^aeiou]/.test(&apos;a&apos;)</div><div class="line">false</div><div class="line">/[^aeiou]/.test(&apos;aeiou&apos;)</div><div class="line">false</div><div class="line">/[^aeiou]/.test(&apos;akjdhk&apos;)</div><div class="line">true</div><div class="line">/[^aeiou]/.test(&apos;u&apos;)</div><div class="line">false</div><div class="line">/[^aeiou]/.test(&apos;us&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h5 id="替换-和-‘-’"><a href="#替换-和-‘-’" class="headerlink" title="替换 和 ‘|’"></a>替换 和 ‘|’</h5><p>不知道为什么叫替换 我感觉就是用’或’来匹配的</p>
+<p>例如匹配 电话号码（座机）’规则前边3位区号后边八位数字|前边四位数字区号后边7位数字  <em>前边区号首数字为0</em> <em>后边数字第一位不为零</em>‘,正则表达式里的替换指的是有几种规则，如果满足其中任意一种规则都应该当成匹配，具体方法是用|把不同的规则分隔开。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">例如规则：(010)87654321 010-87654321 0311-8765432 (0311)8765432</div><div class="line">//匹配前三位区号后8位区号</div><div class="line">/0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;/.test(&apos;010-85697103&apos;)</div><div class="line">true</div><div class="line">//匹配区号三位或者四位的电话</div><div class="line">/0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;010-85697103&apos;)</div><div class="line">true</div><div class="line">//匹配区号三位或者四位或者被小括号括起来的的，后边是7位或者8位的电话号码</div><div class="line">/\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;|\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;|0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;0311-8569710&apos;)</div><div class="line">true</div><div class="line">/\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;|\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;|0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;(0311)8765432&apos;)</div><div class="line">true</div><div class="line">/\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;|\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;|0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;0311-8765432&apos;)</div><div class="line">true</div><div class="line">/\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;|\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;|0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;031-87654321&apos;)</div><div class="line">true</div><div class="line">//注：以下是为什么呢？？ 因为没有开始结尾符。正则表达式匹配的时候 匹配到合适的就会返回true 所以在校验时最好加上开始结尾符。</div><div class="line">/\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;|\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;|0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;|0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;/.test(&apos;031-87654321比较好开奖号&apos;)</div><div class="line">true</div><div class="line">//正确的写法</div><div class="line">/^\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;$|^\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;$|^0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;$|^0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;$/.test(&apos;031-87654321比较好开奖号&apos;)</div><div class="line">false</div><div class="line">/^\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;$|^\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;$|^0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;$|^0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;$/.test(&apos;031-87654321&apos;)</div><div class="line">true</div><div class="line">/^\(0\d&#123;2&#125;\)[1-9]&#123;1&#125;\d&#123;7&#125;$|^\(0\d&#123;3&#125;\)[1-9]&#123;1&#125;\d&#123;6&#125;$|^0\d&#123;2&#125;-[1-9]&#123;1&#125;\d&#123;7&#125;$|^0\d&#123;3&#125;-[1-9]&#123;1&#125;\d&#123;6&#125;$/.test(&apos;0311-8765431&apos;)</div><div class="line">true</div></pre></td></tr></table></figure>
+<h5 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h5><p>上边介绍了单个字符重复匹配 a* 类似这个。重复一个字符串又该怎么办？当！当！当！看这里！ 你可以用小括号来指定子表达式(也叫做分组)，然后你就可以指定这个子表达式的重复次数了，你也可以对子表达式进行其它一些操作</p>
+<p>//ip地址匹配 <em>规则四组数字每组1-3个数字 每一组数字用.隔开 每组数字不能大于255</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">/^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)$/.test(&apos;1.3.4.5&apos;)</div><div class="line">true</div><div class="line">/^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)$/.test(&apos;134.345.4.5&apos;)</div><div class="line">false</div><div class="line">/^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)$/.test(&apos;134.245.254.125&apos;)</div><div class="line">true</div><div class="line">/^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.)&#123;3&#125;(2[0-4]\d|25[0-5]|[01]?\d\d?)$/.test(&apos;234.456.678.789&apos;)</div><div class="line">false</div></pre></td></tr></table></figure></p>
+<p>(2[0-4]\d|25[0-5]|[01]?\d\d?) 重要的是看明白这个正则， 2[0-4]\d 第一位2开始第二位0-4第三位\d 25[0-5] 如果前两位是25第三位0-5 才能保证不会大于255 [01]?\d\d? 如果第一位0或者1可有可无 第二位\d 第三位\d可有可无<br>再没看明白给我十块钱我再给你唠一遍  重申一遍别忘了写^$</p>
+<h5 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h5><p>反向引用的作用通常是用来查找或限定重复、查找或限定指定标识配对出现等等。 <em>反向引用必须要和捕获组一同使用</em></p>
+<h6 id="反向引用“-1”的限制，要求必须是两个相同的字符"><a href="#反向引用“-1”的限制，要求必须是两个相同的字符" class="headerlink" title="反向引用“\1”的限制，要求必须是两个相同的字符"></a>反向引用“\1”的限制，要求必须是两个相同的字符</h6><p>example：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//example</div><div class="line">var str = &apos;aabb&apos;;</div><div class="line">str.match(/([ab])\1/)</div><div class="line">[&quot;aa&quot;, &quot;a&quot;]</div><div class="line">var str = &apos;bbaa&apos;;</div><div class="line">str.match(/([ab])\1/)</div><div class="line">[&quot;bb&quot;, &quot;b&quot;]</div></pre></td></tr></table></figure></p>
+<h6 id="1-x-x-匹配的个数是x-1"><a href="#1-x-x-匹配的个数是x-1" class="headerlink" title="\1{x} {x} 匹配的个数是x+1;"></a>\1{x} <em>{x}</em> 匹配的个数是x+1;</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var str = &apos;bbaa&apos;;</div><div class="line">str.match(/([ab])\1&#123;2&#125;/)</div><div class="line">null</div><div class="line">var str = &apos;bbaaa&apos;;</div><div class="line">str.match(/([ab])\1&#123;2&#125;/)</div><div class="line">[&quot;aaa&quot;, &quot;a&quot;]</div><div class="line">var str = &apos;bbbaaa&apos;;</div><div class="line">str.match(/([ab])\1&#123;2&#125;/)</div><div class="line">[&quot;bbb&quot;, &quot;b&quot;]</div></pre></td></tr></table></figure>
+<h6 id="复杂一点的"><a href="#复杂一点的" class="headerlink" title="复杂一点的"></a>复杂一点的</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&apos;aa&apos;.match(/(\w)((?=\1\1\1)(\1))+/)</div><div class="line">null</div><div class="line">&apos;aaaa&apos;.match(/(\w)((?=\1\1\1)(\1))+/)</div><div class="line">[&quot;aa&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;]</div><div class="line">&apos;aaa&apos;.match(/(\w)((?=\1\1\1)(\1))+/)</div><div class="line">null</div><div class="line">&apos;aaa&apos;.match(/(\w)((?=\1\1)(\1))+/)</div><div class="line">[&quot;aa&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;]</div><div class="line">&apos;aaa&apos;.match(/(\w)((?=\1)(\1))+/)</div><div class="line">[&quot;aaa&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;]</div><div class="line">&apos;aaa&apos;.match(/(\w)((?=\1)(\1))/)</div><div class="line">[&quot;aa&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;]</div></pre></td></tr></table></figure>
+<h6 id="千分符"><a href="#千分符" class="headerlink" title="千分符"></a>千分符</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&apos;100000000&apos;.replace(/\B(?=(\d&#123;3&#125;)+$)/g,&apos;,&apos;);</div><div class="line">&quot;100,000,000&quot;</div></pre></td></tr></table></figure>
+<p>\B 匹配不是开始或者结尾的位置<br>?=exp 匹配 exp前面的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//再来一个例子</div><div class="line">&apos;http://www.pkbug.com/jpg/kjdskddlk/img.jpg&apos;.replace(/(jpg(?=(\/|\b)))+/g,&apos;png&apos;);</div><div class="line">&quot;http://www.pkbug.com/png/kjdskddlk/img.png&quot;</div><div class="line"></div><div class="line">&apos;http://www.pkbug.com/jpg/kjdskddlk/img.jpg&apos;.replace(/(\w&#123;1&#125;(?=(\/|\b)))+/g,&apos;png&apos;);</div><div class="line">&quot;httpng://wwpng.pkbupng.copng/jppng/kjdskddlpng/impng.jppng&quot;</div><div class="line">//就是前边写要匹配的规则 类似jpg  \w 后边（？= exp  exp就是jpg或者\w后边有什么 例如有/  通过/ 来找jpg）</div></pre></td></tr></table></figure>
+<h6 id="（-exp）-分组不捕获"><a href="#（-exp）-分组不捕获" class="headerlink" title="（?:exp） 分组不捕获"></a>（?:exp） 分组不捕获</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/industr(?:y|ies)/.test(&apos;industries&apos;)</div><div class="line">true</div><div class="line">&apos;aaa&apos;.match(/(?:\w)\1/)</div><div class="line">null</div></pre></td></tr></table></figure>
+<h6 id="其他-？…"><a href="#其他-？…" class="headerlink" title="其他 ？…"></a>其他 ？…</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">俩字&apos;前端不支持&apos;</div><div class="line">(?&lt;=exp)	匹配exp后面的位置</div><div class="line">(?&lt;!exp)	匹配前面不是exp的位置</div><div class="line">注释	(?#comment)</div></pre></td></tr></table></figure>
+<h5 id="贪婪与懒惰"><a href="#贪婪与懒惰" class="headerlink" title="贪婪与懒惰"></a>贪婪与懒惰</h5><p>最后聊一下正则的贪婪和懒惰。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">###### 贪婪</div><div class="line"></div><div class="line">*	重复零次或更多次</div><div class="line">+	重复一次或更多次</div><div class="line"></div><div class="line">//当正则表达式包含重复的限定符时，会尽可能多的去匹配。</div><div class="line">&apos;aakjhjkakjhaaahkjahkajha&apos;.match(/a.*a/);</div><div class="line">[&quot;aakjhjkakjhaaahkjahkajha&quot;]  //匹配结果 是尽可能的多匹配 这种通常我们说是贪婪匹配</div></pre></td></tr></table></figure>
+<h6 id="懒惰"><a href="#懒惰" class="headerlink" title="懒惰"></a>懒惰</h6><p>有时候我们需要匹配尽量少的字符 我们就聊一下懒惰 贼简单。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&apos;aakjhjkakjhaaahkjahkajha&apos;.match(/a.*?a/);</div><div class="line">[&quot;aa&quot;]</div><div class="line">&apos;aakjhjkakjhaaahkjahkajha&apos;.match(/a.*?/);</div><div class="line">[&quot;a&quot;]</div><div class="line"></div><div class="line">//很明显在重复限定符后边加一个？ 匹配零次或者一次 这样就会变成尽量少的匹配。</div></pre></td></tr></table></figure></p>
+<p>聊到现在正则也聊差不多了。当然这只是我了解的一丢丢东西 如有其它正则需求请留言。一块学习学习。我有什么新学到的东西也会及时更新上来 谢谢关注！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/正则/" rel="tag"># 正则</a>
+          
+            <a href="/tags/文本匹配/" rel="tag"># 文本匹配</a>
+          
+            <a href="/tags/replace/" rel="tag"># replace</a>
+          
+            <a href="/tags/test/" rel="tag"># test</a>
+          
+            <a href="/tags/match/" rel="tag"># match</a>
+          
+            <a href="/tags/exec/" rel="tag"># exec</a>
+          
+            <a href="/tags/正则表达式/" rel="tag"># 正则表达式</a>
+          
+            <a href="/tags/js正则表达式/" rel="tag"># js正则表达式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/19/count/" rel="next" title="Textarea 计数">
+                <i class="fa fa-chevron-left"></i> Textarea 计数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/10/git/" rel="prev" title="git 笔记">
+                git 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Tom" />
+          <p class="site-author-name" itemprop="name">Tom</p>
+          <p class="site-description motion-element" itemprop="description">决定上路的时候，旅行中的最大困难就已解决。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#创建正则表达式"><span class="nav-number">1.</span> <span class="nav-text">创建正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#第一种使用正则表达式字面量。"><span class="nav-number">1.1.</span> <span class="nav-text">第一种使用正则表达式字面量。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#第二种调用RegExp构造函数。"><span class="nav-number">1.2.</span> <span class="nav-text">第二种调用RegExp构造函数。</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正则表达式的元字符"><span class="nav-number">2.</span> <span class="nav-text">正则表达式的元字符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-’-匹配开始位置。"><span class="nav-number">2.1.</span> <span class="nav-text">‘^’ 匹配开始位置。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-’-匹配字符串结尾位置"><span class="nav-number">2.2.</span> <span class="nav-text">‘$’ 匹配字符串结尾位置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-xxx-‘-准确匹配-例如校验手机号-邮箱-身份证号-密码格式-…"><span class="nav-number">2.3.</span> <span class="nav-text">‘/^xxx$/‘ 准确匹配 例如校验手机号 邮箱 身份证号 密码格式 …</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-w’-匹配字母或数字或下划线或汉字"><span class="nav-number">2.4.</span> <span class="nav-text">‘\w’ 匹配字母或数字或下划线或汉字</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#‘-’-转义符"><span class="nav-number">3.</span> <span class="nav-text">‘\’ 转义符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-’-特殊字符转义为普通字符"><span class="nav-number">3.1.</span> <span class="nav-text">‘*’ 特殊字符转义为普通字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#‘-’-本身用在字符串里边是也需要转义"><span class="nav-number">3.2.</span> <span class="nav-text">‘\’ 本身用在字符串里边是也需要转义</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重复"><span class="nav-number">4.</span> <span class="nav-text">重复</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#重复零次或更多次"><span class="nav-number">4.1.</span> <span class="nav-text">*    重复零次或更多次</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重复一次或更多次"><span class="nav-number">4.2.</span> <span class="nav-text">+    重复一次或更多次</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#重复零次或一次"><span class="nav-number">4.3.</span> <span class="nav-text">?    重复零次或一次</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#n-重复n次"><span class="nav-number">4.4.</span> <span class="nav-text">{n}    重复n次</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#n-重复n次或更多次"><span class="nav-number">4.5.</span> <span class="nav-text">{n,}    重复n次或更多次</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#n-m-重复n到m次"><span class="nav-number">4.6.</span> <span class="nav-text">{n,m}    重复n到m次</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反义"><span class="nav-number">5.</span> <span class="nav-text">反义</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#W-匹配任意不是字母，数字，下划线，汉字的字符"><span class="nav-number">5.1.</span> <span class="nav-text">\W    匹配任意不是字母，数字，下划线，汉字的字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#S-匹配任意不是空白符的字符"><span class="nav-number">5.2.</span> <span class="nav-text">\S    匹配任意不是空白符的字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#D-匹配任意非数字的字符"><span class="nav-number">5.3.</span> <span class="nav-text">\D    匹配任意非数字的字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#B-匹配不是单词开头或结束的位置"><span class="nav-number">5.4.</span> <span class="nav-text">\B    匹配不是单词开头或结束的位置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#x-匹配除了x以外的任意字符"><span class="nav-number">5.5.</span> <span class="nav-text">[^x]    匹配除了x以外的任意字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#aeiou-匹配除了aeiou这几个字母以外的任意字符"><span class="nav-number">5.6.</span> <span class="nav-text">[^aeiou]    匹配除了aeiou这几个字母以外的任意字符</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换-和-‘-’"><span class="nav-number">6.</span> <span class="nav-text">替换 和 ‘|’</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分组"><span class="nav-number">7.</span> <span class="nav-text">分组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反向引用"><span class="nav-number">8.</span> <span class="nav-text">反向引用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#反向引用“-1”的限制，要求必须是两个相同的字符"><span class="nav-number">8.1.</span> <span class="nav-text">反向引用“\1”的限制，要求必须是两个相同的字符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-x-x-匹配的个数是x-1"><span class="nav-number">8.2.</span> <span class="nav-text">\1{x} {x} 匹配的个数是x+1;</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#复杂一点的"><span class="nav-number">8.3.</span> <span class="nav-text">复杂一点的</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#千分符"><span class="nav-number">8.4.</span> <span class="nav-text">千分符</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#（-exp）-分组不捕获"><span class="nav-number">8.5.</span> <span class="nav-text">（?:exp） 分组不捕获</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#其他-？…"><span class="nav-number">8.6.</span> <span class="nav-text">其他 ？…</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#贪婪与懒惰"><span class="nav-number">9.</span> <span class="nav-text">贪婪与懒惰</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#懒惰"><span class="nav-number">9.1.</span> <span class="nav-text">懒惰</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tom</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
